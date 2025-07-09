@@ -1,0 +1,41 @@
+<div class="page-wrapper">
+  <div class="page-container">
+    <h2>Minha Lista de Filmes</h2>
+
+    <a routerLink="/filmes/novo" class="btn-add">+ Adicionar Filme</a>
+
+    <table *ngIf="movies.length > 0; else semFilmes">
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>Status</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let m of movies">
+          <td>{{ m.title }}</td>
+          <td>
+            <span [class.badge-done]="m.status === 'Assistido'">
+              {{ m.status }}
+            </span>
+          </td>
+          <td class="actions">
+            <a [routerLink]="['/filmes/editar', m._id]" class="btn-link">✏️ Editar</a>
+            <button class="btn-link" (click)="toggle(m)">
+              {{ m.status === 'Pendente' ? '✔️ Assistido' : '↩️ Pendente' }}
+            </button>
+            <button class="btn-link danger" (click)="delete(m._id!)">Deletar🗑️</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #semFilmes>
+      <p class="empty-msg">
+        Você ainda não adicionou nenhum filme.<br />
+        Clique em <strong>“+ Adicionar Filme”</strong> para começar!
+      </p>
+    </ng-template>
+  </div>
+</div>
